@@ -21,26 +21,15 @@ namespace ConsoleApp1
             public static void getExcelFile()
             {
                 Excel.Application xlApp = new Excel.Application();
-                Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(@"H:\Test\YourWorkbook.xlsx");
+                Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(@"H:\Test\YourWorkbook2.xlsx");
                 Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
                 Excel.Range xlRange = xlWorksheet.UsedRange;
-                //Console.WriteLine(xlRange.Columns);
                 int rowCount = xlRange.Rows.Count;
                 int colCount = xlRange.Columns.Count;
 
-                Person Kim = new Person();
+                Person Kim = getPerson(xlRange);
+                Console.WriteLine(Kim);
 
-
-                for (int r = 1; r <= rowCount; r++)
-                {
-                    for (int c = 1; c <= colCount; c++)
-                    {
-                        //if (r == 1)
-                            //Console.Write("\r\n");
-                        //if (xlRange.Cells[r, c] != null && xlRange.Cells[r, c].Value2 != null)
-                            Console.WriteLine(xlRange.Cells[r, c].Value2.ToString() + "\t");
-                    }
-                }
 
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
@@ -56,6 +45,38 @@ namespace ConsoleApp1
 
                 Console.ReadLine();
             }
+
+            public static Person getPerson(Excel.Range xlRange)
+            {
+                int rowCount = xlRange.Rows.Count;
+                int colCount = xlRange.Columns.Count;
+
+                Person Kim = new Person();
+
+                int FirstColumn = xlRange.Cells.EntireRow.Find("FirstName").Column;
+                int LastColumn = xlRange.Cells.EntireRow.Find("LastName").Column;
+                int OutlookColumn = xlRange.Cells.EntireRow.Find("Outlook").Column;
+                int StMartinColumn = xlRange.Cells.EntireRow.Find("StMartin").Column;
+
+                for (int r = 1; r <= rowCount; r++)
+                {
+
+                    Kim.FirstName = xlRange.Cells[r, FirstColumn].Value;
+                    Kim.LastName = xlRange.Cells[r, LastColumn].Value;
+                    Kim.EmailOutlook = xlRange.Cells[r, OutlookColumn].Value;
+                    Kim.EmailStMartins = xlRange.Cells[r, StMartinColumn].Value;
+                }
+                return Kim;
+            }
+
+            public static Person getPeople(Excel.Range xlRange)
+            {
+                //forloop
+                //getPerson()
+                return null;
+            }
+
+
         }
 
     }
