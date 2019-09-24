@@ -23,18 +23,18 @@ namespace ConsoleApp1
                 Excel.Application xlApp = new Excel.Application();
                 Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(@"H:\Test\YourWorkbook2.xlsx");
                 Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
-                Excel.Range xlRange = xlWorksheet.UsedRange;
-                int rowCount = xlRange.Rows.Count;
-                int colCount = xlRange.Columns.Count;
+                Excel.Range worksheet = xlWorksheet.UsedRange;
+                int rowCount = worksheet.Rows.Count;
+                int colCount = worksheet.Columns.Count;
 
-                Person Kim = getPerson(xlRange);
-                Console.WriteLine(Kim);
+                Person Kim = getPeople(worksheet);
+               
 
 
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
 
-                Marshal.ReleaseComObject(xlRange);
+                Marshal.ReleaseComObject(worksheet);
                 Marshal.ReleaseComObject(xlWorksheet);
 
                 xlWorkbook.Close();
@@ -46,33 +46,35 @@ namespace ConsoleApp1
                 Console.ReadLine();
             }
 
-            public static Person getPerson(Excel.Range xlRange)
-            {
-                int rowCount = xlRange.Rows.Count;
-                int colCount = xlRange.Columns.Count;
+            public static Person getPerson(Excel.Range worksheet, int row)
+            {                         
 
-                Person Kim = new Person();
+                Person person = new Person();
 
-                int FirstColumn = xlRange.Cells.EntireRow.Find("FirstName").Column;
-                int LastColumn = xlRange.Cells.EntireRow.Find("LastName").Column;
-                int OutlookColumn = xlRange.Cells.EntireRow.Find("Outlook").Column;
-                int StMartinColumn = xlRange.Cells.EntireRow.Find("StMartin").Column;
+                int FirstColumn = worksheet.Cells.EntireRow.Find("FirstName").Column;
+                int LastColumn = worksheet.Cells.EntireRow.Find("LastName").Column;
+                int OutlookColumn = worksheet.Cells.EntireRow.Find("Outlook").Column;
+                int StMartinColumn = worksheet.Cells.EntireRow.Find("StMartin").Column;
 
-                for (int r = 1; r <= rowCount; r++)
-                {
+                            
 
-                    Kim.FirstName = xlRange.Cells[r, FirstColumn].Value;
-                    Kim.LastName = xlRange.Cells[r, LastColumn].Value;
-                    Kim.EmailOutlook = xlRange.Cells[r, OutlookColumn].Value;
-                    Kim.EmailStMartins = xlRange.Cells[r, StMartinColumn].Value;
-                }
-                return Kim;
+                    person.FirstName = worksheet.Cells[row, FirstColumn].Value;
+                    person.LastName = worksheet.Cells[row, LastColumn].Value;
+                    person.EmailOutlook = worksheet.Cells[row, OutlookColumn].Value;
+                    person.EmailStMartins = worksheet.Cells[row, StMartinColumn].Value;
+              
+                return person;
             }
 
-            public static Person getPeople(Excel.Range xlRange)
+            public static Person getPeople(Excel.Range worksheet)
             {
-                //forloop
-                //getPerson()
+                int rowCount = worksheet.Rows.Count;
+               
+                for (int row = 2; row <= rowCount; row++)
+                {
+                    Person person = getPerson(worksheet, row);
+                    Console.WriteLine(person);
+                }
                 return null;
             }
 

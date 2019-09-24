@@ -8,9 +8,9 @@ namespace ConsoleApp1
 {
     class Person
     {
-        //******************
-        //****Properties****
-        //******************
+        
+        //Properties
+        
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
@@ -20,7 +20,7 @@ namespace ConsoleApp1
 
         public override string ToString()
         {
-            return $"FirstName: {FirstName} +  LastName: {LastName} + EmailStMartins: {EmailStMartins} + EmailOutlook: {EmailOutlook}";
+            return $"FirstName: {FirstName}   LastName: {LastName}  EmailStMartins: {EmailStMartins}  EmailOutlook: {EmailOutlook}";
         }
     }
 }
