@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Excel = Microsoft.Office.Interop.Excel;
 using Word = Microsoft.Office.Interop.Word;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace ConsoleApp1
 {

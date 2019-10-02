@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Excel = Microsoft.Office.Interop.Excel;
 using Word = Microsoft.Office.Interop.Word;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace ConsoleApp1
 {
@@ -14,20 +16,31 @@ namespace ConsoleApp1
     {
         public static void Main (string[] args)
         {
-            string path = @"H:\Test\YourWorkbook4.xlsx";
+            //string path = @"H:\Test\YourWorkbook4.xlsx";
 
             //Calls the constructor.
+           //Spreadsheet spreadsheet = new Spreadsheet(path);
+
+            //spreadsheet.getExcelFile();
+
+            //foreach (var person in spreadsheet.Students)
+            //{
+            //    Console.WriteLine(person);
+            //}
+
+            //spreadsheet.ConfirmEmail("tarzan.castro@outlook.com");
+            sendemail();
+           
+
+        }
+
+        static async void sendemail()
+        {
+            string path = @"H:\Test\YourWorkbook4.xlsx";
             Spreadsheet spreadsheet = new Spreadsheet(path);
+            EmailService emailService = new EmailService(spreadsheet);
 
-            spreadsheet.getExcelFile();
-
-            foreach (var person in spreadsheet.Students)
-            {
-                Console.WriteLine(person);
-            }
-
-            spreadsheet.ConfirmEmail("tarzan.castro@outlook.com");
-
+            emailService.SendConfirmationEmail().Wait();
         }
 
     }
