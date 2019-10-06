@@ -10,19 +10,22 @@ using Word = Microsoft.Office.Interop.Word;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
-namespace ConsoleApp1
+namespace EmailConfirmationService
 {
-    class Spreadsheet
+    public class Spreadsheet
     {
-        public List<Person> Students { get; set; }
+        public List<Person> Persons { get; set; }
 
         public string FilePath { get; set; }
 
         public Excel.Range range { get; set; }
         public Spreadsheet(string filepath)
         {
+            if (!File.Exists(filepath))
+                throw new ArgumentNullException("The files are not in the computer.");
+            
             FilePath = filepath;
-            Students = new List<Person>();
+            Persons = new List<Person>();
         }
         public Excel.Worksheet worksheet { get; set; }
 
@@ -74,11 +77,8 @@ namespace ConsoleApp1
             try
             {
                 openSheet();
-
-                int rowCount = worksheet.Rows.Count;
-                int colCount = worksheet.Columns.Count;
-
-                getStudents(range);
+                                
+                getAllPersons(range);
             }
             catch(Exception e)
             {
@@ -91,15 +91,15 @@ namespace ConsoleApp1
             
 
         }
-        public Person getStudents(Excel.Range worksheet)
+        public Person getAllPersons(Excel.Range worksheet)
         {
             int rowCount = worksheet.Rows.Count;
 
             for (int row = 2; row <= rowCount; row++)
             {
                 Person person = getPerson(worksheet, row);
-                //Console.WriteLine(person);
-                Students.Add(person);
+                
+                Persons.Add(person);
           
             }
             return null;
@@ -130,12 +130,8 @@ namespace ConsoleApp1
                 openSheet();
                 Excel.Range range = FindEmailCell(email);
                 ChangeCellColor(range, Excel.XlRgbColor.rgbLightGreen);
-                string filepath = "lol";
-            }
-            catch
-            {
-                Console.WriteLine("Your program sucks bro");
-            }
+                
+            }        
             finally
             {
                SaveAndCloseSheet();
