@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
-namespace ConsoleApp1
+namespace EmailConfirmationService
 {
-    class Person
+    public class Person
     {
         
         //Properties

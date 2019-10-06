@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "Manage Spreadsheet";
+}
+
+<h2>Please upload your spreadsheet</h2>
+@using (Html.BeginForm("Upload", "Spreadsheet", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <label for="file">Upload File:</label>
+    <input type="file" name="file" id="file" /><br><br>
+    <input type="submit" value="Submit" />
+    <br><br>
+    
+}
+        <h2>@ViewBag.Message</h2>
