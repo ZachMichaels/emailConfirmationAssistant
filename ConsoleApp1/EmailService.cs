@@ -30,13 +30,14 @@ namespace EmailConfirmationService
            msg.SetFrom( new EmailAddress("thworldsmostfakebeonlyusedforthisspecificmomentwithsaxcandkim@stmartin.com", "MSSA"));
 
             var recipients = new List<EmailAddress>();
-            
-         
+
+            var tasks = new List<Task>();
             foreach (Person person in Sheet.Persons)
             {
-                await sendConfirmationEmail(person.EmailOutlook, person.FirstName);
-                await sendConfirmationEmail(person.EmailStMartins, person.FirstName);               
+                tasks.Add(sendConfirmationEmail(person.EmailOutlook, person.FirstName));
+                tasks.Add(sendConfirmationEmail(person.EmailStMartins, person.FirstName));                               
             }
+            Task.WaitAll(tasks.ToArray()); 
         }
 
         public async Task<Response> sendConfirmationEmail(string email, string name)
