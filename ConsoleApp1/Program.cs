@@ -16,8 +16,7 @@ namespace EmailConfirmationService
     {
         public static void Main (string[] args)
         {
-            //string path = @"H:\Test\YourWorkbook4.xlsx";
-            string path = @"C:\Users\Isaac\Downloads\TestSheet_IsaacOnly.xlsx";
+            string path = @"H:\Test\YourWorkbook4.xlsx";            
            
             //Calls the constructor.
             Spreadsheet spreadsheet = new Spreadsheet(path);
