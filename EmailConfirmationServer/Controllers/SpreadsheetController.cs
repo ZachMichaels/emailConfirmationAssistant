@@ -31,16 +31,8 @@ namespace EmailConfirmationServer.Controllers
                     string path = Path.Combine(Server.MapPath("~/Files"), Path.GetFileName(file.FileName));
                     file.SaveAs(path);                    
                     Spreadsheet spreadsheet = new Spreadsheet(path);
-                    //spreadsheet.getExcelFile();
-                    var testEmails = new List<Person>()
-                    {
-                        new Person(){FirstName= "Isaac", LastName = "Flores",
-                            EmailOutlook ="isaac.flores2@outlook.com", EmailStMartins = "isaac.flores@stmartin.edu"},
-                        new Person(){FirstName= "Isaac", LastName = "Flores",
-                            EmailOutlook ="isaac.a.flores2@gmail.com", EmailStMartins = "izmac0072@gmail.com"}
-                    };
-                    spreadsheet.Persons.AddRange(testEmails);
-
+                    spreadsheet.getExcelFile();            
+                    
                     EmailConfirmationService.EmailService emailService = new EmailConfirmationService.EmailService(spreadsheet);
                     await emailService.sendConfirmationEmails();                                                           
                     ViewBag.Message = "File uploaded successfully";
