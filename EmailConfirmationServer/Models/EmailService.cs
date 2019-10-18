@@ -9,7 +9,8 @@ namespace EmailConfirmationServer.Models
 {
     public class EmailService
     {
-        private string APIKey = "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";
+        private string APIKey = "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";
+        //private string APIKey = "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";
 
         public EmailService(Spreadsheet sheet)
         {
@@ -45,7 +46,7 @@ namespace EmailConfirmationServer.Models
             recipients.Add(new EmailAddress(email, name));
             msg.AddTos(recipients);
           
-            msg.SetTemplateId("d-8dbd045f80d44095b9b193bbc594706c");
+            msg.SetTemplateId("d-3f737b74633140dd853760238bcb6a8f");
 
             var dynamicTemplateData = new UserInfo
             {
