@@ -17,11 +17,16 @@
                 <ul class="nav flex-column mb-2">
                     @foreach (SheetUpload sheet in Model.Uploads)
                     {
-                        <li class="nav-item">
-                            <a class="nav-link" onclick="loadConfirmedSpreadsheet()" href="#" id=@sheet.Id>
-                                Sheet: @sheet.Id
-                            </a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link" onclick="loadConfirmedSpreadsheet()" href="#" id=@sheet.Id>
+                            Sheet: @sheet.Id
+                        </a>
+                        <form asp-controller="Spreadsheet" asp-action="DeleteSpreadsheet" method="post">
+                            <input type="hidden" name="id" value="@sheet.Id" />
+                            <button type="submit">Delete</button>
+                        </form>
+                        @*<button type="button" href="('@Url.Action("LoadUnconfirmedSpreadsheet")', { id: uploadId }" class="btn btn-light" onclick="DeleteSpreadsheet(@sheet.Id)">Delete</button>*@
+                    </li>
                     }
                 </ul>
             </div>
@@ -96,5 +101,7 @@
                 })
             })
         }
+
+        
     </script>
 }

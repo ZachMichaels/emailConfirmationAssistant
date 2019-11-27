@@ -9,6 +9,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using Microsoft.AspNet.Identity;
+using Microsoft.Office.Interop.Excel;
+
 
 namespace EmailConfirmationServer.Controllers
 {
@@ -32,6 +34,7 @@ namespace EmailConfirmationServer.Controllers
         {
             return View();
         }
+
         public ActionResult Upload()
         {
             string userId = User.Identity.GetUserId();
@@ -50,6 +53,7 @@ namespace EmailConfirmationServer.Controllers
             //To do: return uploads instead of a list of people
             return View(user);
         }
+
         [HttpPost]
         public async Task<ActionResult> Upload(HttpPostedFileBase file)
         {
@@ -158,6 +162,24 @@ namespace EmailConfirmationServer.Controllers
             var people = upload.People.AsQueryable();
 
             return View("_ConfirmedTablePartial", people);
+        }
+
+        [HttpPost]       
+        public ActionResult DeleteSpreadsheet(int id)
+        {
+
+            string userId = User.Identity.GetUserId();
+            var user = context.FindUserById(userId);
+
+            var upload = (from sheetUpload in user.Uploads
+                          where sheetUpload.Id == id
+                          select sheetUpload).FirstOrDefault();
+
+            context.Delete(upload);
+            context.SaveChanges();
+           
+
+            return RedirectToAction("Upload");
         }
     }
 }

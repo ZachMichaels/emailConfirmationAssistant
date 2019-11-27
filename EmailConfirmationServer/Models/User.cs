@@ -14,7 +14,7 @@ namespace EmailConfirmationServer.Models
         public User(string id)
         {
             Id = id;
-            Uploads = new List<SheetUpload>(); 
+            Uploads = new List<SheetUpload>();
         }
 
         public User()
@@ -22,5 +22,6 @@ namespace EmailConfirmationServer.Models
             Id = null;
             Uploads = null;
         }
-    }
+
+    }  
 }

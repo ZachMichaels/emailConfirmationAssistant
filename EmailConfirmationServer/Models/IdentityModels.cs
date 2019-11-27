@@ -94,5 +94,12 @@ namespace EmailConfirmationServer.Models
 
             return user;
         }
+
+        void IEmailConfirmationContext.Delete(SheetUpload sheet)
+        {
+            Uploads.Remove(sheet);
+        }
+
+
     }
 }
